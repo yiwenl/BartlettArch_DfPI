@@ -7,3 +7,8 @@
 # WebGL Libraries
 - [Three.js](https://threejs.org)
 - [regl](https://github.com/regl-project/regl)
+
+# OpenGL / WebGL Learning Resources
+- [Learn Opengl](https://learnopengl.com)
+- [WebGL Fundamentals](webglfundamentals.org)
+- [Learn WebGL](http://learnwebgl.brown37.net/)
