@@ -10,7 +10,7 @@
 - [Learn Opengl](https://learnopengl.com)
 - [WebGL Fundamentals](webglfundamentals.org)
 - [Learn WebGL](http://learnwebgl.brown37.net/)
-
+- [The Book of shaders](https://thebookofshaders.com)
 
 
 # WebGL Libraries
