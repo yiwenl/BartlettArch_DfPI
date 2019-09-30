@@ -11,6 +11,7 @@
 - [WebGL Fundamentals](https://webglfundamentals.org)
 - [Learn WebGL](http://learnwebgl.brown37.net/)
 - [The Book of shaders](https://thebookofshaders.com)
+- [W3 Schools](https://www.w3schools.com/js/default.asp)
 
 
 # WebGL Libraries
