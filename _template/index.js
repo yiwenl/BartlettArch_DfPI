@@ -64,8 +64,13 @@ const drawTriangle = regl({
 
 function render () {
   time += 0.02
+  const r = 5
 
-  mat4.lookAt(mtxView, [Math.sin(time) * 5, 0, 5 + Math.sin(time) * 2], [0, 0, 0], [0, 1, 0])
+  const x = Math.sin(time) * r
+  const y = Math.sin(Math.cos(time * 0.5) * 2.0) * 2.0
+  const z = Math.cos(time) * r
+
+  mat4.lookAt(mtxView, [x, y, z], [0, 0, 0], [0, 1, 0])
   clear()
   drawTriangle({
     time: time,
