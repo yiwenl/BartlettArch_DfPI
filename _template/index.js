@@ -1,5 +1,14 @@
 const regl = require('regl')()
 const { mat4 } = require('gl-matrix')
+const io = require('socket.io-client')
+
+/*
+const socket = io('localhost:9876')
+
+socket.on('clicked', o => {
+  console.log('Clicked', o)
+})
+*/
 
 const clear = () => {
   regl.clear({

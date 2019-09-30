@@ -21,4 +21,17 @@ receiver.on('/server/disconnect', function() {
 
 receiver.on('/test', function(x, y) { 
 	console.log('clicked', x, y);
+
+	io.emit('clicked', {x, y});
 })
+
+
+//	WEB SOCKETS
+
+io.on('connection', (socket)=>_onConnected(socket));
+
+function _onConnected(socket) {
+	console.log('A user is connected : ', socket.id);
+
+	socket.on('disconnect', ()=>_onDisconnected() );
+}
