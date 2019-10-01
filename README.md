@@ -18,6 +18,8 @@
 - [Three.js](https://threejs.org)
 - [regl](https://github.com/regl-project/regl)
 
+# Math Libraries
+- [gl-matrix](http://glmatrix.net/)
 
 # Start up tools / server 
 - [Canvas Sketch](https://github.com/mattdesl/canvas-sketch)
