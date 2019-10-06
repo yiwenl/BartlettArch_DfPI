@@ -102,7 +102,7 @@ function render () {
     window.requestAnimationFrame(render)
     return
   }
-  time += 0.0
+  time += 0.01
   const r = 5
 
   const x = Math.sin(time) * r
