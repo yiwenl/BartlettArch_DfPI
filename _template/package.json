@@ -13,6 +13,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "budo index.js --live -- -t babelify",
+    "texture": "budo texture.js --live -- -t babelify",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
