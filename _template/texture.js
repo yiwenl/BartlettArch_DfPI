@@ -17,7 +17,7 @@ const clear = () => {
 }
 
 let time = 0
-const r = 1
+const r = 0.5
 const mtxProject = mat4.create()
 const mtxView = mat4.create()
 const fov = 45 * Math.PI / 180
@@ -80,7 +80,7 @@ const drawTriangle = regl({
 
     void main() {
       vec3 pos = position;
-			gl_Position = uProjectionMatrix * uViewMatrix * vec4(pos, 1.0);
+			gl_Position = vec4(pos, 1.0);
 			vUV = uv;
     }`,
 
@@ -103,13 +103,13 @@ function render () {
     return
   }
   time += 0.01
-  const r = 5
+  const r = 
 
   const x = Math.sin(time) * r
   // const y = Math.sin(Math.cos(time * 0.5) * 2.0) * 2.0
   const z = Math.cos(time) * r
 
-  mat4.lookAt(mtxView, [x, 0, z], [0, 0, 0], [0, 1, 0])
+  // mat4.lookAt(mtxView, [x, 0, z], [0, 0, 0], [0, 1, 0])
   clear()
   drawTriangle({
     time: time,

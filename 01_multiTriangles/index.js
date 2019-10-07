@@ -10,7 +10,7 @@ const viewMatrix = mat4.create()
 mat4.lookAt(viewMatrix, [0, 0, 5], [0, 0, 0], [0, 1, 0])
 
 let time = 0
-const numTriangles = 100000
+const numTriangles = 1
 const points = []
 const colors = []
 const extras = []
@@ -56,29 +56,13 @@ var vertexShader = `
 precision mediump float;
 attribute vec3 position;
 attribute vec3 aColor;
-attribute vec3 aExtra;
-
-uniform float uTime;
-uniform mat4 uProjectionMatrix;
-uniform mat4 uViewMatrix;
 
 varying vec3 vColor;
 
-vec2 rotate(vec2 v, float a) {
-  float c = cos(a);
-  float s = sin(a);
-  mat2 m = mat2(c, -s, s, c);
-  
-  return m * v;
-}
-
 void main() {
   vec3 pos = position;
-  pos *= aExtra.x;
-  pos.xy = rotate(pos.xy, aExtra.y);
-  pos.yz = rotate(pos.yz, aExtra.z);
 
-  gl_Position = uProjectionMatrix * uViewMatrix * vec4(pos, 1.0);
+  gl_Position = vec4(position, 1.0);
 
   vColor = aColor;
 }
@@ -91,6 +75,7 @@ varying vec3 vColor;
 
 void main() {
   gl_FragColor = vec4(vColor, 1.0);
+
 }
 `
 
