@@ -15,7 +15,8 @@
     "start": "budo index.js --live -- -t babelify",
     "start02": "budo index02.js --live -- -t babelify",
     "texture": "budo texture.js --live -- -t babelify",
-    "test": "budo test.js --live -- -t babelify"
+    "test": "budo test.js --live -- -t babelify",
+    "remote": "budo indexSocketRotation.js --live -- -t babelify"
   },
   "author": "",
   "license": "ISC"

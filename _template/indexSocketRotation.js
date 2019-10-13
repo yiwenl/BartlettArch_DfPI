@@ -135,14 +135,14 @@ socket.on('cameramove', function (o) {
   mat4.copy(viewMatrix, o.view)
 })
 
-socket.on('tilt', function (o) {
-  if (Math.random() > 0.99) {
-    console.log('on tilt', o)
-  }
-  const radians = Math.PI / 180
-  rotationValues = [
-    -o.beta * radians + Math.PI / 2,
-    o.gamma * radians,
-    o.alpha * radians
-  ]
-})
+// socket.on('tilt', function (o) {
+//   if (Math.random() > 0.99) {
+//     console.log('on tilt', o)
+//   }
+//   const radians = Math.PI / 180
+//   rotationValues = [
+//     -o.beta * radians + Math.PI / 2,
+//     o.gamma * radians,
+//     o.alpha * radians
+//   ]
+// })

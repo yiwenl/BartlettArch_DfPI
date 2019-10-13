@@ -51,7 +51,7 @@ function render () {
   GL.setMatrices(camera)
   bAxis.draw()
   bDots.draw()
-  // drawCube.draw()
+  drawCube.draw()
 
   socket.emit('cameramove', {
     view: camera.matrix,
