@@ -30,7 +30,7 @@ loadObj('hook.obj', function (o) {
   drawTriangle = regl({
     uniforms: {
       uTime: regl.prop('time'),
-      uProjectionMatrix: projectionMatrix,
+      uProjectionMatrix: regl.prop('projection'),
       uViewMatrix: regl.prop('view')
     },
     vert: strVert,
@@ -62,13 +62,20 @@ function render () {
 
   var obj = {
     time: currTime,
-    view: viewMatrix
+    view: viewMatrix,
+    projection: projectionMatrix
   }
 
-  // console.log('Time :', obj)
   clear()
   drawTriangle(obj)
   window.requestAnimationFrame(render)
 }
 
 render()
+
+window.addEventListener('resize', function () {
+  regl.poll()
+  var fov = 75 * Math.PI / 180
+  var aspect = window.innerWidth / window.innerHeight
+  mat4.perspective(projectionMatrix, fov, aspect, 0.01, 1000.0)
+})
