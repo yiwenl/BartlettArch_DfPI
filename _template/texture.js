@@ -48,10 +48,9 @@ const img = new Image()
 img.onload = function () {
   console.log('Image loaded', this)
   texture = regl.texture(this)
-  console.log('texture', texture)
   imageLoaded = true
 }
-img.src = 'image.jpg'
+img.src = './assets/image.jpg'
 
 mat4.perspective(mtxProject, fov, window.innerWidth / window.innerHeight, 0.1, 100)
 mat4.lookAt(mtxView, [0, 0, 10], [0, 0, 0], [0, 1, 0])
@@ -75,13 +74,13 @@ const drawTriangle = regl({
     uniform float time;
     uniform mat4 uProjectionMatrix;
     uniform mat4 uViewMatrix;
-		
-		varying vec2 vUV;
+
+    varying vec2 vUV;
 
     void main() {
       vec3 pos = position;
-			gl_Position = vec4(pos, 1.0);
-			vUV = uv;
+      gl_Position = uProjectionMatrix * uViewMatrix * vec4(pos, 1.0);
+      vUV = uv;
     }`,
 
   attributes: {
@@ -103,13 +102,12 @@ function render () {
     return
   }
   time += 0.01
-  const r = 
+  const r = 3.0
 
   const x = Math.sin(time) * r
-  // const y = Math.sin(Math.cos(time * 0.5) * 2.0) * 2.0
   const z = Math.cos(time) * r
 
-  // mat4.lookAt(mtxView, [x, 0, z], [0, 0, 0], [0, 1, 0])
+  mat4.lookAt(mtxView, [x, 0, z], [0, 0, 0], [0, 1, 0])
   clear()
   drawTriangle({
     time: time,
