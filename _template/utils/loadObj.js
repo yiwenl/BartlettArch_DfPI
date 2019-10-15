@@ -28,7 +28,8 @@ const loadObj = (mFileName, mCallback) => {
 
     mCallback(attribtues)
   })
-  oReq.open('GET', `./assets/${mFileName}`)
+  // oReq.open('GET', `./assets/${mFileName}`)
+  oReq.open('GET', `${mFileName}`)
 
   oReq.send()
 }
