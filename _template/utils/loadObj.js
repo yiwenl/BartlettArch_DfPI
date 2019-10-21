@@ -1,6 +1,6 @@
 const parseOBJ = require('geom-parse-obj')
 
-const formAttributes = ({ cells, positions, uvs }) => {
+const formAttributes = ({ cells, positions, normals, uvs }) => {
   let count = 0
   const _positions = []
   const _uvs = []
