@@ -22,6 +22,7 @@
     "uv": "budo indexLoadUVObj.js --live -- -t babelify",
     "bauhaus": "budo indexBauhaus.js --live -- -t babelify",
     "bauhaus2": "budo indexBauhaus2.js --live -- -t babelify",
+    "bauhaus3": "budo indexBauhaus3.js --live -- -t babelify",
     "test": "budo test.js --live -- -t babelify",
     "remote": "budo indexSocketRotation.js --live -- -t babelify"
   },
