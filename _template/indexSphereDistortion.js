@@ -1,6 +1,6 @@
 const regl = require('regl')()
-const strVert = require('./shaders/vertex.js')
-const strFrag = require('./shaders/fragment.js')
+const strVert = require('./shaders/vertexSphere.js')
+const strFrag = require('./shaders/fragmentSphere.js')
 const loadObj = require('./utils/loadObj.js')
 
 const glm = require('gl-matrix')
@@ -16,28 +16,17 @@ mat4.lookAt(viewMatrix, [0, 0, 2], [0, 0, 0], [0, 1, 0])
 
 var drawCube
 
-var value = 0
+var t = 2
 
-var start = -10
-var end = 10
-
-var newStart = 0
-var newEnd = 1
-
-function map (value, start, end, newStart, newEnd) {
-  var percent = (value - start) / (end - start)
-  if (percent < 0) {
-    percent = 0
-  }
-  if (percent > 1) {
-    percent = 1
-  }
-  var newValue = newStart + (newEnd - newStart) * percent
-  return newValue
+var a = t > 5 ? 999 : 111
+/*
+if(t > 5) {
+  a = 1;
+} else {
+  a = 0;
 }
-
-var mappedValue = map(value, start, end, newStart, newEnd)
-console.log('Mapped value', mappedValue)
+*/
+console.log(a)
 
 var mouseX = 0; var mouseY = 0
 // camera control
@@ -50,7 +39,7 @@ window.addEventListener('mousemove', function (e) {
   mouseY = (y - 0.5) * movingRange
 })
 
-loadObj('./assets/cube.obj', function (obj) {
+loadObj('./assets/sphere.obj', function (obj) {
   console.log(obj)
   // create the attributes
   var attributes = {
@@ -86,29 +75,19 @@ var gap = 2
 function render () {
   currTime += 0.01
 
-  mat4.lookAt(viewMatrix, [mouseX, mouseY, 30], [0, 0, 0], [0, 1, 0])
+  mat4.lookAt(viewMatrix, [mouseX, mouseY, 5], [0, 0, 0], [0, 1, 0])
 
   clear()
   if (drawCube != undefined) {
-    var num = 10
-    const start = num / 2 * 2 - 1
-
-    for (var i = 0; i < num; i++) {
-      for (var j = 0; j < num; j++) {
-        for (var k = 0; k < num; k++) {
-          // create object for uniforms
-          var obj = {
-            time: currTime,
-            projection: projectionMatrix,
-            view: viewMatrix,
-            translate: [-start + i * gap, -start + j * gap, -start + k * gap],
-            color: [i / num, j / num, k / num]
-          }
-
-          drawCube(obj)
-        }
-      }
+    var obj = {
+      time: currTime,
+      projection: projectionMatrix,
+      view: viewMatrix,
+      translate: [0, 0, 0],
+      color: [1, 0, 0]
     }
+
+    drawCube(obj)
   }
 
   window.requestAnimationFrame(render)

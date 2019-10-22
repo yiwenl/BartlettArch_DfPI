@@ -1,12 +1,16 @@
 const parseOBJ = require('geom-parse-obj')
 
-const formAttributes = ({ cells, positions, uvs }) => {
+const formAttributes = ({ cells, positions, normals, uvs }) => {
   let count = 0
   const _positions = []
+  const _normals = []
   const _uvs = []
   cells.forEach((cell, i) => {
     cell.forEach(index => {
       _positions.push(positions[index])
+      if (normals) {
+        _normals.push(normals[index])
+      }
       _uvs.push(uvs[index])
     })
     count += 3
@@ -15,6 +19,7 @@ const formAttributes = ({ cells, positions, uvs }) => {
   return {
     positions: _positions,
     uvs: _uvs,
+    normals: _normals,
     count
   }
 }
@@ -30,7 +35,8 @@ const loadObj = (mFileName, mCallback) => {
 
     mCallback(attribtues)
   })
-  oReq.open('GET', `./assets/${mFileName}`)
+  // oReq.open('GET', `./assets/${mFileName}`)
+  oReq.open('GET', `${mFileName}`)
 
   oReq.send()
 }

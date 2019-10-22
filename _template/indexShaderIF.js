@@ -64,7 +64,8 @@ loadObj('./assets/cube.obj', function (obj) {
       uProjectionMatrix: regl.prop('projection'),
       uViewMatrix: regl.prop('view'),
       uTranslate: regl.prop('translate'),
-      uColor: regl.prop('color')
+      uColor: regl.prop('color'),
+      isBW: regl.prop('bw')
     },
     vert: strVert,
     frag: strFrag,
@@ -93,6 +94,13 @@ function render () {
     var num = 10
     const start = num / 2 * 2 - 1
 
+    var isBW = false
+
+    if (currTime > 2) {
+      gap += 0.01
+      isBW = true
+    }
+
     for (var i = 0; i < num; i++) {
       for (var j = 0; j < num; j++) {
         for (var k = 0; k < num; k++) {
@@ -102,7 +110,8 @@ function render () {
             projection: projectionMatrix,
             view: viewMatrix,
             translate: [-start + i * gap, -start + j * gap, -start + k * gap],
-            color: [i / num, j / num, k / num]
+            color: [i / num, j / num, k / num],
+            bw: isBW ? 1.0 : 0.0
           }
 
           drawCube(obj)

@@ -1,6 +1,5 @@
 const regl = require('regl')()
 const { mat4 } = require('gl-matrix')
-const io = require('socket.io-client')
 
 /*
 const socket = io('localhost:9876')
@@ -44,12 +43,17 @@ const uvs = [
 
 let texture
 let imageLoaded = false
+
+console.log('Create Image')
 const img = new Image()
+
 img.onload = function () {
   console.log('Image loaded', this)
   texture = regl.texture(this)
   imageLoaded = true
 }
+
+console.log('Set the source of the image')
 img.src = './assets/image.jpg'
 
 mat4.perspective(mtxProject, fov, window.innerWidth / window.innerHeight, 0.1, 100)
@@ -62,8 +66,12 @@ const drawTriangle = regl({
     uniform sampler2D texture;
     
     void main() {
-      gl_FragColor = vec4(vUV, 0.0, 1.0);
-      gl_FragColor = texture2D(texture, vUV);
+      vec2 uv = vUV;
+      vec4 colorImage = texture2D(texture, uv);
+      // colorImage.a = 0.5;
+      colorImage *= 0.5;
+
+      gl_FragColor = colorImage;
     }`,
 
   vert: `
@@ -98,10 +106,13 @@ const drawTriangle = regl({
 
 function render () {
   if (!imageLoaded) {
+    console.log(' Image not loaded')
     window.requestAnimationFrame(render)
     return
   }
-  time += 0.01
+
+  console.log('start drawing')
+  time += 0.0
   const r = 3.0
 
   const x = Math.sin(time) * r

@@ -19,6 +19,9 @@
     "fragment": "budo indexMultipleFragmentShader.js --live -- -t babelify",
     "texture": "budo texture.js --live -- -t babelify",
     "model": "budo indexLoadObj.js --live -- -t babelify",
+    "uv": "budo indexLoadUVObj.js --live -- -t babelify",
+    "bauhaus": "budo indexBauhaus.js --live -- -t babelify",
+    "bauhaus2": "budo indexBauhaus2.js --live -- -t babelify",
     "test": "budo test.js --live -- -t babelify",
     "remote": "budo indexSocketRotation.js --live -- -t babelify"
   },
