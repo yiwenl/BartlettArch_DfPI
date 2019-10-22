@@ -21,8 +21,11 @@ const clear = () => {
 var fragStr = `
 precision mediump float;
 varying vec3 vColor;
+uniform vec3 uPosition;
 
 void main() {
+  // vec3 color = uPosition / 5.0 * .5 + .5;
+  // gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
   gl_FragColor = vec4(vColor, 1.0);
 }`
 
@@ -35,29 +38,18 @@ uniform float uTime;
 uniform mat4 uProjectionMatrix;
 uniform mat4 uViewMatrix;
 
+uniform vec3 uPosition;
+
 varying vec3 vColor;
 
+
 void main() {
-  // create holder for position
-  vec3 pos = aPosition;
-  
-  // add the time to the 'x' only
-  // pos.x += uTime;
-
-  float movingRange = 0.0;
-  pos.x += sin(uTime) * movingRange;
-  pos.y += cos(uTime) * movingRange;
-  // sin goes from -1 ~ 1
-
-  float scale = sin(uTime);
-  
-  scale = scale * 0.5 + 0.5;
-  // scale => -1 ~ 1 -> -0.5 ~ 0.5 -> 0 ~ 1
+  vec3 pos = aPosition + uPosition;
 
   gl_Position = uProjectionMatrix * uViewMatrix * vec4(pos, 1.0);
   vColor = color;
 }`
-const r = 0.5
+const r = 0.45
 const attributes = {
   aPosition: regl.buffer([
     [-r, r, 0.0],
@@ -83,7 +75,8 @@ const drawTriangle = regl({
   uniforms: {
     uTime: regl.prop('time'),
     uProjectionMatrix: projectionMatrix,
-    uViewMatrix: regl.prop('view')
+    uViewMatrix: regl.prop('view'),
+    uPosition: regl.prop('position')
   },
   frag: fragStr,
   vert: vertStr,
@@ -91,22 +84,43 @@ const drawTriangle = regl({
   count: 6
 })
 
+var traced = false
+
 function render () {
-  currTime += 0.01
-  var cameraRadius = 1.0
+  currTime += 0.0
+  var cameraRadius = 10.0
   var cameraX = Math.sin(currTime) * cameraRadius
   var cameraZ = Math.cos(currTime) * cameraRadius
 
   mat4.lookAt(viewMatrix, [cameraX, 0, cameraZ], [0, 0, 0], [0, 1, 0])
 
-  var obj = {
-    time: currTime,
-    view: viewMatrix
-  }
-
   // console.log('Time :', obj)
   clear()
-  drawTriangle(obj)
+
+  var num = 10
+  var start = -num / 2
+  for (var i = 0; i < num; i++) {
+    for (var j = 0; j < num; j++) {
+      // for (var k = 0; k < num; k++) {
+      var x = start + i
+      var y = start + j
+
+      var obj = {
+        position: [x, y, 0],
+        time: currTime,
+        view: viewMatrix
+      }
+
+      if (!traced) {
+        console.log(obj.position)
+      }
+      drawTriangle(obj)
+      // }
+    }
+  }
+
+  traced = true
+
   window.requestAnimationFrame(render)
 }
 

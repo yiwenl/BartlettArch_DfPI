@@ -21,7 +21,7 @@ var currTime = 0
 var hasModelLoaded = false
 var drawTriangle
 
-loadObj('hook.obj', function (o) {
+loadObj('cube.obj', function (o) {
   const attributes = {
     aPosition: regl.buffer(o.positions),
     aUV: regl.buffer(o.uvs)

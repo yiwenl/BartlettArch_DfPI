@@ -24,6 +24,8 @@ const loadObj = (mFileName, mCallback) => {
   oReq.addEventListener('load', () => {
     const o = parseOBJ(oReq.response)
 
+    console.log('o', o)
+
     const attribtues = formAttributes(o)
 
     mCallback(attribtues)

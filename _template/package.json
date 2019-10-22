@@ -15,6 +15,8 @@
   "scripts": {
     "start": "budo index.js --live -- -t babelify",
     "start02": "budo index02.js --live -- -t babelify",
+    "multipleCircle": "budo indexMultipleCircles.js --live -- -t babelify",
+    "fragment": "budo indexMultipleFragmentShader.js --live -- -t babelify",
     "texture": "budo texture.js --live -- -t babelify",
     "model": "budo indexLoadObj.js --live -- -t babelify",
     "test": "budo test.js --live -- -t babelify",

@@ -3,7 +3,7 @@ const alfrid = require('alfrid')
 const io = require('socket.io-client')
 const GL = alfrid.GL
 
-const socket = io('http://192.168.1.69:9876')
+const socket = io('http://10.97.134.65:9876')
 
 const canvas = document.createElement('canvas')
 document.body.appendChild(canvas)

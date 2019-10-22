@@ -1,6 +1,6 @@
 const regl = require('regl')()
 const io = require('socket.io-client')
-const socket = io('http://192.168.1.69:9876')
+const socket = io('http://10.97.134.65:9876')
 
 const glm = require('gl-matrix')
 var mat4 = glm.mat4
