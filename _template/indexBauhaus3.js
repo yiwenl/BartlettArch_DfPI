@@ -3,10 +3,16 @@ const loadObj = require('./utils/loadObj.js')
 const glm = require('gl-matrix')
 
 const io = require('socket.io-client')
+
+// PUT YOUR IP HERE TOO
 const socket = io('http://192.168.43.148:9876')
 
 socket.on('cameramove', function (o) {
   mat4.copy(viewMatrix, o.view)
+})
+
+socket.on('tilt', function (o) {
+  console.log('on tilt', o)
 })
 
 console.log('here')

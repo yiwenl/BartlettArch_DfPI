@@ -3,6 +3,7 @@ const alfrid = require('alfrid')
 const io = require('socket.io-client')
 const GL = alfrid.GL
 
+// PUT YOUR OWN IP HERE
 const socket = io('http://192.168.43.148:9876')
 
 const canvas = document.createElement('canvas')

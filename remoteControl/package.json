@@ -4,10 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run serve && npm run remote",
     "serve": "node ./server.js",
-    "remote": "budo index.js --live -- -t babelify",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "remote": "budo index.js --live -- -t babelify"
   },
   "author": "",
   "license": "ISC",
