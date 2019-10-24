@@ -1,3 +1,7 @@
+// In this lesson we are going to load a 3D model and a texture then put the texture on the model
+// Most of the code stays the same with the previous lesson, the only difference is now we load
+// the 3D model instead using a plane
+
 // ********************************
 // I'm cleaning some of the comments as it start getting messy.
 // If there's any confusing points please go back to previous files for the comments
@@ -7,18 +11,11 @@ var regl = require('regl')()
 var glm = require('gl-matrix')
 var mat4 = glm.mat4
 
-console.log('Texture examples')
-console.log('Texture examples')
-console.log('Texture examples')
-console.log('Texture examples')
-
 // import the shader from external files
 // again we are using different shader again for random scale / colors
 // make sure you are looking at the right shader
-var vertStr = require('./shaders/vertex04.js')
-var fragStr = require('./shaders/fragment04.js')
-
-// the rest stays the same, all the changes are made in the shader
+var vertStr = require('./shaders/vertex05.js')
+var fragStr = require('./shaders/fragment05.js')
 
 // import the loadObj tool
 var loadObj = require('./utils/loadObj.js')
@@ -71,11 +68,25 @@ window.addEventListener('mousemove', function (event) {
   mouseY = -map(y, 0, window.innerHeight, -25, 25)
 })
 
-// create a variable for draw call
-var drawCube
+// create texture
+let texture
+let imageLoaded = false
 
-// instead of creating the attributes ourselves, now loading the 3d model instead
-loadObj('./assets/cube.obj', function (obj) {
+// create image
+var img = new Image()
+
+img.onload = function () {
+  console.log('Image loaded', this)
+  texture = regl.texture(this)
+  imageLoaded = true
+}
+
+var drawCall
+console.log('Set the source of the image, this will load the image')
+img.src = './assets/colorFlipped.png'
+
+// loading the hook 3D model
+loadObj('./assets/hook.obj', function (obj) {
   console.log('Model Loaded', obj)
 
   // create attributes
@@ -86,12 +97,13 @@ loadObj('./assets/cube.obj', function (obj) {
 
   // create the draw call and assign to the drawCube variable that we created
   // so we can call the drawCube in the render function
-  drawCube = regl({
+  drawCall = regl({
     uniforms: {
       uTime: regl.prop('time'),
       uProjectionMatrix: regl.prop('projection'),
       uViewMatrix: regl.prop('view'),
-      uTranslate: regl.prop('translate')
+      uTranslate: regl.prop('translate'),
+      texture: regl.prop('texture')
     },
     vert: vertStr,
     frag: fragStr,
@@ -108,36 +120,22 @@ function render () {
 
   // recalculate the view matrix because we are constantly moving the camera position now
   // use mouseX, mouseY for the position of camera
-  var eye = [mouseX, mouseY, 30]
+  var eye = [mouseX, mouseY, 5]
   var center = [0, 0, 0]
   var up = [0, 1, 0]
   mat4.lookAt(viewMatrix, eye, center, up)
 
-  // 3d model takes time to load, therefore check if drawCube is exist first before calling it
-  if (drawCube !== undefined) {
-    // we want to draw a 10x10x10 grid
-    var num = 10
-    // the size of our cube is 2 now so we need to move a bit more to center the whole thing
-    var sizeOfCube = 2
-    var start = num / 2 * sizeOfCube
-    // therefore we need to create 3 for loops, and make sure the draw call is in the deepest loop
-
-    for (var i = 0; i < num; i++) {
-      for (var j = 0; j < num; j++) {
-        for (var k = 0; k < num; k++) {
-          // create an object for uniform
-          var obj = {
-            time: currTime,
-            projection: projectionMatrix,
-            view: viewMatrix,
-            translate: [-start + i * sizeOfCube, -start + j * sizeOfCube, -start + k * sizeOfCube]
-          }
-
-          // draw the cube, don't forget the pass the obj in for uniform
-          drawCube(obj)
-        }
-      }
+  // only start drawing when the image is loaded
+  if (imageLoaded && drawCall != undefined) {
+    var obj = {
+      time: currTime,
+      projection: projectionMatrix,
+      view: viewMatrix,
+      texture: texture
     }
+
+    // draw the cube, don't forget the pass the obj in for uniform
+    drawCall(obj)
   }
 
   // make it loop
