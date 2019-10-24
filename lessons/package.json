@@ -26,7 +26,8 @@
     "start11": "budo 11_gridOfCubesWithColor.js --live -- -t babelify",
     "start12": "budo 12_gridOfCubesWithNoise.js --live -- -t babelify",
     "start13": "budo 13_texture.js --live -- -t babelify",
-    "start14": "budo 14_textureMapping.js --live -- -t babelify"
+    "start14": "budo 14_textureMapping.js --live -- -t babelify",
+    "start15": "budo 15_extraAttribute.js --live -- -t babelify"
   },
   "author": "",
   "license": "ISC"
