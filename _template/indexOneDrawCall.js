@@ -50,58 +50,62 @@ window.addEventListener('mousemove', function (e) {
   mouseY = (y - 0.5) * movingRange
 })
 
+loadObj('./assets/cube.obj', function (obj) {
+  console.log(obj)
 
-loadObj('./assets/hook.obj', function (objHook) {
-  console.log('hook loaded', objHook.positions)
+  var newPosition = [];
+  var newUV = [];
+  var newTranslate = [];
 
-  
-  loadObj('./assets/cube.obj', function (obj) {
-    console.log(obj)
 
-    var newPosition = [];
-    var newUV = [];
-    var newTranslate = [];
-    var numInstance = 0;
+  var numBox = 50;
 
-    for(var j =0; j<objHook.positions.length; j++) {
-      for(var i=0; i<obj.positions.length; i++) {
-        // copy all the position / uvs
-        newPosition.push(obj.positions[i]);
-        newUV.push(obj.uvs[i])
+  var numInstance = 0;
 
-        // add new translate as attribute
-        var translate = objHook.positions[j]
-        newTranslate.push(translate)
+  for(var l=0; l<numBox; l++) {
+    for(var m=0; m<numBox; m++) {
+      for(var n=0; n<numBox; n++) {
+        for(var i=0; i<obj.positions.length; i++) {
+          // copy all the position / uvs
+          newPosition.push(obj.positions[i]);
+          newUV.push(obj.uvs[i])
+
+          // add new translate as attribute
+          var translate = [l * 2 - 20, m * 2 - 20, n * 2 - 20]
+          newTranslate.push(translate)
+        }
+
+        numInstance ++;
       }
-
-      numInstance ++;
     }
-
-    // create the attributes
-    var attributes = {
-      aPosition: regl.buffer(newPosition),
-      aUV: regl.buffer(newUV),
-      aTranslate: regl.buffer(newTranslate)
-    }
-    // create our draw call
-    drawCube = regl({
-      uniforms: {
-        uTime: regl.prop('time'),
-        uProjectionMatrix: regl.prop('projection'),
-        uViewMatrix: regl.prop('view'),
-        uTranslate: regl.prop('translate'),
-        uColor: regl.prop('color')
-      },
-      vert: strVert,
-      frag: strFrag,
-      attributes: attributes,
-      count: obj.count * numInstance
-    })
-  });
-
-
+  }
 
   
+
+  console.log(newTranslate.length, newPosition.length);
+
+
+
+  // create the attributes
+  var attributes = {
+    aPosition: regl.buffer(newPosition),
+    aUV: regl.buffer(newUV),
+    aTranslate: regl.buffer(newTranslate)
+  }
+  // create our draw call
+  drawCube = regl({
+    uniforms: {
+      uTime: regl.prop('time'),
+      uProjectionMatrix: regl.prop('projection'),
+      uViewMatrix: regl.prop('view'),
+      uTranslate: regl.prop('translate'),
+      uColor: regl.prop('color')
+    },
+    vert: strVert,
+    frag: strFrag,
+    attributes: attributes,
+    count: obj.count * numInstance
+  })
 })
 
 var currTime = 0
@@ -117,7 +121,7 @@ var gap = 2
 function render () {
   currTime += 0.01
 
-  mat4.lookAt(viewMatrix, [mouseX, mouseY, 10], [0, 0, 0], [0, 1, 0])
+  mat4.lookAt(viewMatrix, [mouseX, mouseY, 200], [0, 0, 0], [0, 1, 0])
 
   clear()
   if (drawCube != undefined) {
