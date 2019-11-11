@@ -4,7 +4,7 @@ const io = require('socket.io-client')
 const GL = alfrid.GL
 
 // PUT YOUR OWN IP HERE
-const socket = io('http://10.97.83.43:9876')
+const socket = io('http://10.97.80.223:9876')
 
 const canvas = document.createElement('canvas')
 document.body.appendChild(canvas)

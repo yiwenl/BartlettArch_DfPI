@@ -17,9 +17,6 @@ io.on('connection', (socket) => _onConnected(socket))
 
 function dispatch (socket, eventName) {
   socket.on(eventName, function (o) {
-    if (Math.random() > 0.99) {
-      console.log('Event', eventName, o)
-    }
     io.emit(eventName, o)
   })
 }
