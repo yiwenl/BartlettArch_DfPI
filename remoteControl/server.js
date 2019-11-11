@@ -41,14 +41,10 @@ function _onDisconnected () {
 }
 
 // EVENT LISTENERS FROM OSC
-receiver.on('/server/connect', function () {
-  console.log('OSC connected')
-})
-
-receiver.on('/server/disconnect', function () {
-  console.log('OSC disconnected')
-})
-
-receiver.on('/mousemove', function (x, y) {
-  console.log('OSC mouse move ', x, y)
+receiver.on('/mousemove', function (mouseX, mouseY) {
+  console.log('OSC mouse move ', mouseX, mouseY)
+  io.emit('mousemove', {
+    x: mouseX,
+    y: mouseY
+  })
 })
