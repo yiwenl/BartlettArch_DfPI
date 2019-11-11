@@ -20,6 +20,10 @@ socket.on('tilt', function (o) {
   console.log('on tilt', o)
 })
 
+socket.on('mousemove', function (obj) {
+  console.log('mousemove', obj)
+})
+
 const strVert = require('./shaders/vert.js')
 const strFrag = require('./shaders/frag.js')
 

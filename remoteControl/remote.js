@@ -21,6 +21,17 @@ camera.setPerspective(45 * Math.PI / 180, GL.aspectRatio, 0.01, 1000)
 const orbitalControl = new alfrid.OrbitalControl(camera, window, 5)
 orbitalControl.rx.value = orbitalControl.ry.value = 0.3
 
+// mouse position
+window.addEventListener('mousemove', (e) => {
+  const mouseX = e.clientX / window.innerWidth
+  const mouseY = e.clientY / window.innerHeight
+
+  socket.emit('mousemove', {
+    x: mouseX,
+    y: mouseY
+  })
+})
+
 const bAxis = new alfrid.BatchAxis()
 const bDots = new alfrid.BatchDotsPlane()
 

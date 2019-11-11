@@ -28,6 +28,12 @@ function _onConnected (socket) {
 
   dispatch(socket, 'cameramove')
   dispatch(socket, 'tilt')
+
+  // same as using the 'dispatch function above'
+
+  socket.on('mousemove', function (obj) {
+    io.emit('mousemove', obj)
+  })
 }
 
 function _onDisconnected () {
