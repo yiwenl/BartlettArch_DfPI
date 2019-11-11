@@ -1,12 +1,18 @@
 // server.js
 
+// WEB SOCKETS
 const PORT_SOCKET = 9876
 const app = require('express')()
 const server = app.listen(PORT_SOCKET)
 const io = require('socket.io')(server)
 
-// WEB SOCKETS
+// OSC
+const PORT_OSC = 32000
+const OscReceiver = require('osc-receiver')
+const receiver = new OscReceiver()
+receiver.bind(PORT_OSC)
 
+// EVENT LISTENERS FROM WEBSOCKET
 io.on('connection', (socket) => _onConnected(socket))
 
 function dispatch (socket, eventName) {
@@ -30,3 +36,16 @@ function _onConnected (socket) {
 function _onDisconnected () {
   console.log('A user is disconnected')
 }
+
+// EVENT LISTENERS FROM OSC
+receiver.on('/server/connect', function () {
+  console.log('OSC connected')
+})
+
+receiver.on('/server/disconnect', function () {
+  console.log('OSC disconnected')
+})
+
+receiver.on('/mousemove', function (x, y) {
+  console.log('OSC mouse move ', x, y)
+})
